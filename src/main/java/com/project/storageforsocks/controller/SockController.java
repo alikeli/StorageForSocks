@@ -69,7 +69,7 @@ public class SockController {
     public ResponseEntity<Integer> getAmountOfSocks(@RequestParam String color,
                                                     @RequestParam int cottonPart,
                                                     @RequestParam com.project.storageforsocks.entity.Operation operation) {
-        return ResponseEntity.ok(socksService.getAmountOfSocks(color,cottonPart, operation));
+        return ResponseEntity.ok(socksService.getAmountOfSocks(color, cottonPart, operation));
     }
 
 

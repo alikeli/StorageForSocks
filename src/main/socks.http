@@ -1,0 +1,35 @@
+###
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+"color":"red",
+"cottonPart":20,
+"amount":100
+}
+
+###
+
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+"color": "red",
+"cottonPart": 100,
+"amount": 100
+}
+
+###
+POST http://localhost:8080/api/socks/outcome
+Content-Type: application/json
+
+{
+"color": "red",
+"cotton_part": 20,
+"amount": 50
+}
+
+###
+GET http://localhost:8080/api/socks?color=purple&operation=moreThan&cottonPart=60
+###
+GET http://localhost:8080/api/socks?color=purple&operation=lessThan?cottonPart=99

@@ -7,13 +7,12 @@ import com.project.storageforsocks.exception.SocksNotFoundException;
 import com.project.storageforsocks.mapper.SocksMapper;
 import com.project.storageforsocks.repository.SocksRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Slf4j
 @Service
@@ -33,7 +32,7 @@ public class SocksService {
 
     /**
      * Add socks to DB.
-     * If DB contains entry with the same color and cotton part, then its amount will be increased by quantity.
+     * If DB contains entry with the same color and cotton part, then its amount will be increased amount.
      *
      * @param socksDto {@link SocksDto} instance from user's request.
      */
@@ -75,7 +74,7 @@ public class SocksService {
      * cotton part and comparison operators.
      *
      * @param color      name of the color
-     * @param operation  comparison operator from {@link Operation}
+     * @param operation  comparison operator
      * @param cottonPart desired amount of cotton
      * @return numbers of socks matching the required params or nothing
      */
@@ -83,6 +82,7 @@ public class SocksService {
     public Integer getAmountOfSocks(String color, int cottonPart, Operation operation) {
         log.debug("method getAmountOfSocks had been started");
         List<Socks> socks = new ArrayList<>();
+
         switch (operation) {
             case EQUAL -> socks = socksRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
             case LESSTHAN -> socks = socksRepository.findAllByColorAndCottonPartLessThan(color, cottonPart);
