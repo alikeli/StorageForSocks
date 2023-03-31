@@ -2,24 +2,16 @@ package com.project.storageforsocks.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "socks")
-@RequiredArgsConstructor
 public class Socks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "socks_id")
-    private int id;
+    private Integer id;
 
 
     @Column(name = "color")

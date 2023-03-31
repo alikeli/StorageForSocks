@@ -7,23 +7,29 @@ import com.project.storageforsocks.exception.SocksNotFoundException;
 import com.project.storageforsocks.mapper.SocksMapper;
 import com.project.storageforsocks.repository.SocksRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
+@Transactional
 
 public class SocksService {
 
     private final SocksRepository socksRepository;
+
     private final SocksMapper socksMapper;
 
     public SocksService(SocksRepository socksRepository, SocksMapper socksMapper) {
         this.socksRepository = socksRepository;
         this.socksMapper = socksMapper;
     }
+
 
     /**
      * Add socks to DB.
@@ -79,8 +85,8 @@ public class SocksService {
         List<Socks> socks = new ArrayList<>();
         switch (operation) {
             case EQUAL -> socks = socksRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
-            case LESSTHAN -> socks=socksRepository.findAllByColorAndCottonPartLessThan(color,cottonPart);
-            case MORETHAN -> socks=socksRepository.findAllByColorAndCottonPartGreaterThan(color,cottonPart);
+            case LESSTHAN -> socks = socksRepository.findAllByColorAndCottonPartLessThan(color, cottonPart);
+            case MORETHAN -> socks = socksRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPart);
 
         }
         log.debug("method getAmountOfSocks had been ended");

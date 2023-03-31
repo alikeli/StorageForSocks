@@ -2,21 +2,18 @@ package com.project.storageforsocks.controller;
 
 import com.project.storageforsocks.dto.SocksDto;
 import com.project.storageforsocks.service.SocksService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
-@RestController
 
+@RestController
 @RequestMapping("/api/socks")
 public class SockController {
     private final SocksService socksService;
