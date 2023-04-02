@@ -1,23 +1,23 @@
+
 package com.project.storageforsocks.service;
 
 import com.project.storageforsocks.dto.SocksDto;
-import com.project.storageforsocks.entity.Operation;
+import com.project.storageforsocks.entity.OperationEnum;
 import com.project.storageforsocks.entity.Socks;
 import com.project.storageforsocks.exception.SocksNotFoundException;
 import com.project.storageforsocks.mapper.SocksMapper;
 import com.project.storageforsocks.repository.SocksRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
 @Service
-@Transactional
-
 public class SocksService {
 
     private final SocksRepository socksRepository;
@@ -37,17 +37,19 @@ public class SocksService {
      * @param socksDto {@link SocksDto} instance from user's request.
      */
 
-    public SocksDto addSocks(SocksDto socksDto) {
-        log.debug("method addSocks had been started");
-        Socks socksInStorage = socksRepository.findByColorAndCottonPart(socksDto.getColor(),
-                socksDto.getCottonPart());
-        if (socksInStorage == null) {
-            log.warn("Socks added");
-            return socksMapper.toDto(socksRepository.save(socksMapper.toEntity(socksDto)));
+    @Transactional
+    public void addSocks(SocksDto socksDto) {
+        log.info("Method 'addSocks' had been started");
+        Optional<Socks> socks = socksRepository
+                .findByColorAndCottonPart(socksDto.getColor(), socksDto.getCottonPart());
+        Socks newSocks;
+        if (socks.isPresent()) {
+            newSocks = socks.get();
+            newSocks.setQuantity(newSocks.getQuantity() + socksDto.getQuantity());
+        } else {
+            newSocks = socksMapper.toEntity(socksDto);
         }
-        socksInStorage.setAmount(socksInStorage.getAmount() + socksDto.getAmount());
-        log.info("Socks update");
-        return socksMapper.toDto(socksRepository.save(socksInStorage));
+        socksRepository.save(newSocks);
     }
 
     /**
@@ -59,12 +61,12 @@ public class SocksService {
 
     public void removeSocks(SocksDto socksDto) {
         log.debug("method removeSocks had been started");
-        Socks socks = socksRepository.findByColorAndCottonPart(socksDto.getColor(), socksDto.getCottonPart());
-        if (socks == null || socks.getAmount() < socksDto.getAmount()) {
+        Socks socks = socksRepository.findByColorAndCottonPart(socksDto.getColor(), socksDto.getCottonPart()).orElseThrow();
+        if (socks.getQuantity() < socksDto.getQuantity()) {
             log.warn("Socks not found");
             throw new SocksNotFoundException();
         }
-        socks.setAmount(socks.getAmount() - socksDto.getAmount());
+        socks.setQuantity(socks.getQuantity() - socksDto.getQuantity());
         socksRepository.save(socks);
     }
 
@@ -79,19 +81,32 @@ public class SocksService {
      * @return numbers of socks matching the required params or nothing
      */
 
-    public Integer getAmountOfSocks(String color, int cottonPart, Operation operation) {
+    public Integer getAmountOfSocks(String color, Integer cottonPart, OperationEnum operation) {
         log.debug("method getAmountOfSocks had been started");
         List<Socks> socks = new ArrayList<>();
 
         switch (operation) {
-            case EQUAL -> socks = socksRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
-            case LESSTHAN -> socks = socksRepository.findAllByColorAndCottonPartLessThan(color, cottonPart);
-            case MORETHAN -> socks = socksRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPart);
+            case EQUAL: {
+                socks = socksRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
+                break;
+            }
+            case LESSTHAN: {
+                socks = socksRepository.findAllByColorAndCottonPartLessThan(color, cottonPart);
+                break;
+            }
+            case MORETHAN: {
+                socks = socksRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPart);
+                break;
+            }
 
         }
         log.debug("method getAmountOfSocks had been ended");
-        return socks.stream().map(Socks::getAmount).reduce(0, Integer::sum);
+        return socks.stream().map(Socks::getQuantity).reduce(0, Integer::sum);
     }
 
 
 }
+
+
+
+

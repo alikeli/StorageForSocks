@@ -1,18 +1,19 @@
 package com.project.storageforsocks.dto;
 
-import jakarta.validation.constraints.*;
+
 import lombok.Data;
+
+import javax.validation.constraints.*;
 
 @Data
 public class SocksDto {
-    private Integer id;
-
-    @NotNull(message = "color should be fill in")
+    @NotBlank
     private String color;
-    @Min(value = 0,message = "cotton part should be >=0")
-    @Max(value = 100,message = "cotton part should be <=100")
-    private Integer cottonPart;
+    @Min(value = 0, message = "should be > 0")
+    @Max(value = 100, message = "should be <100")
+    private int cottonPart;
+    @Min(value = 1, message = "min 1 ")
+    private int quantity;
 
-    @Min(value = 0,message = "amount should be >=0")
-    private Integer amount;
+
 }
