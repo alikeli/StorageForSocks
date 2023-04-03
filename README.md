@@ -49,3 +49,6 @@
 
 - Open API определение SwaggerUI: http://localhost:8080/api/swagger-ui/index.html
 - Проект использует контейнеризацию с помощью Docker Compose для PostgreSQL
+
+### Cхема базы данных
+* <img src="https://github.com/alikeli/StorageForSocks/blob/master/%D0%A1%D1%85%D0%B5%D0%BC%D0%B0%20db.PNG"  width="250"/> &nbsp;&nbsp; 
