@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  db:
+    image: postgres:latest
+    privileged: true
+    container_name: 'java-postgres'
+    ports:
+     - "5432:5432"
+    environment:
+     POSTGRES_USER: user
+     POSTGRES_PASSWORD: 12345678
+     POSTGRES_DB: socks-db

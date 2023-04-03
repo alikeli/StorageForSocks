@@ -43,3 +43,9 @@
 * <img src="https://github.com/alikeli/images/blob/main/hibernate.png" width="35"/> &nbsp;&nbsp; Hibernate  
 * <img src="https://github.com/alikeli/images/blob/main/liquibase_logo_icon_247825.png" width="30"/> &nbsp;&nbsp; Liquibase 
 * <img src="https://github.com/alikeli/images/blob/main/pb_Hp8ci.jpg" width="30"/> &nbsp;&nbsp;  Lombok 
+
+
+### Документация
+
+- Open API определение SwaggerUI: http://localhost:8080/api/swagger-ui/index.html
+- Проект использует контейнеризацию с помощью Docker Compose для PostgreSQL
